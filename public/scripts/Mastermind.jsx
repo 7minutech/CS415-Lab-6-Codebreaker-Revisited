@@ -31,8 +31,8 @@
             // client code 
             // this.buildPegSelectors();
             // this.setSlots();
-            this.generate_code();
-            this.generate_code_counts();
+            this.generateCode();
+            this.generateCodeCounts();
             console.log(this.code);
         }
 
@@ -61,6 +61,32 @@
         }
 
         render() {
-            
+            return(
+            <div>
+                <h1>Welcome to Codebreaker!</h1>
+                <p>(For more information about how to play this game, click <a href="howtoplay.html" target="_blank">here</a>.)</p>
+                <form>
+                    <fieldset>
+                        <legend>Enter your guesses here ...</legend>
+                        <table>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4</th>
+                            </tr>
+                            
+                            <tr id="pegslots">
+                                <td><label>What is your guess?</label></td>
+                            </tr>
+
+                        </table>
+                        <p><input type="submit" value="Guess" id="submit_button"/></p>
+
+                    </fieldset>
+                </form>
+            </div>
+            )
         }
     }

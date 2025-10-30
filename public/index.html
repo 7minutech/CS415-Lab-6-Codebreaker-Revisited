@@ -3,58 +3,31 @@
 
 <head>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>CS 415: Codebreaker!</title>
-    <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="scripts/react.production.min.js"></script>
-    <script type="text/javascript" src="scripts/react-dom.production.min.js"></script>
-    <script type="text/javascript" src="scripts/babel.min.js"></script>
-    <script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="scripts/script.js"></script
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="scripts/react.production.min.js"></script>
+    <script src="scripts/react-dom.production.min.js"></script>
+    <script src="scripts/babel.min.js"></script>
+
+    <script src="scripts/Mastermind.jsx" type="text/babel"></script>
+
 
 </head>
 
 <body>
 
-    <h1>Welcome to Codebreaker!</h1>
+    <div id="root"></div>
 
-    <p>(For more information about how to play this game, click <a href="howtoplay.html" target="_blank">here</a>.)</p>
+    <script type="text/babel">
 
-    <form id="gameform" onsubmit="return false;">
+        var container = document.getElementById('root');
+        var root = ReactDOM.createRoot(container);
+        root.render(<MasterMind />);
 
-        <fieldset>
-
-            <legend>Enter your guesses here ...</legend>
-
-            <table>
-
-                <tr>
-                    <th>&nbsp;</th>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
-                </tr>
-
-                <tr id="pegslots">
-
-                    <td><label for="slot0">What is your guess?</label></td>
-
-                </tr>
-
-            </table>
-
-            <p><input type="submit" value="Guess" id="submit_button"></p>
-
-        </fieldset>
-
-    </form>
-
-    <div id="output">
-        <table id="result_table">
-
-        </table>
-    </div>
+    </script>
 
 </body>
 
