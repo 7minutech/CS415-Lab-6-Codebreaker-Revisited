@@ -1,6 +1,6 @@
-    const codeLength = 4;
+    export  const codeLength = 4;
     
-    const codePegs =  [
+    export const codePegs =  [
         { name: "Green", color: "\u{1F7E2}" },
         { name: "Blue", color: "\u{1F535}" },
         { name: "Red", color: "\u{1F534}" },
@@ -79,6 +79,7 @@
                             
                             <tr id="pegslots">
                                 <td><label>What is your guess?</label></td>
+                                <MasterMind/>
                             </tr>
 
                         </table>
