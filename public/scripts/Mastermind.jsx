@@ -61,6 +61,12 @@
         }
 
         render() {
+
+            let pegSelectors = []
+            for (let i = 0; i < codeLength; i++) {
+                pegSelectors.push(<PegSelector/>)
+            }
+
             return(
             <div>
                 <h1>Welcome to Codebreaker!</h1>
@@ -79,6 +85,7 @@
                             
                             <tr id="pegslots">
                                 <td><label>What is your guess?</label></td>
+                                {pegSelectors}
                             </tr>
 
                         </table>
