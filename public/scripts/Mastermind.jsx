@@ -53,12 +53,17 @@
         }
 
         onClick = () => {
-
+            this.incrementGuessCount()
         }
 
         handlePegSelectorChange = () => {
 
         }
+
+        incrementGuessCount = () => {
+            this.setState((previousState) => ({guess_count: previousState.guess_count + 1}))
+        }
+
 
         render() {
 
@@ -71,7 +76,6 @@
             <div>
                 <h1>Welcome to Codebreaker!</h1>
                 <p>(For more information about how to play this game, click <a href="howtoplay.html" target="_blank">here</a>.)</p>
-                <form>
                     <fieldset>
                         <legend>Enter your guesses here ...</legend>
                         <table>
@@ -89,10 +93,8 @@
                             </tr>
 
                         </table>
-                        <p><input type="submit" value="Guess" id="submit_button"/></p>
-
+                        <button onClick={this.onClick}>Guess</button>
                     </fieldset>
-                </form>
             </div>
             )
         }
