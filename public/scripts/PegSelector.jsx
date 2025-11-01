@@ -1,7 +1,11 @@
 class PegSelector extends React.Component {
     constructor(props){
         super(props);
+        this.state = {selected: -1};
+    }
 
+    pegSelected = (event) => {
+        this.setState({selected: event.target.value})
     }
 
     render() {
@@ -12,7 +16,7 @@ class PegSelector extends React.Component {
             rows.push(<option value={peg["name"]}>{peg["color"] + " (" + peg["name"] + ")"}</option>)
         })
         return(
-            <td><select name="" id="">{rows}</select></td>
+            <td><select name="" id="" onChange={this.pegSelected}>{rows}</select></td>
         )
     }
 }
