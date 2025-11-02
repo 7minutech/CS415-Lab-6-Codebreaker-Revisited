@@ -33,7 +33,7 @@ class MasterMind extends React.Component {
         // this.setSlots();
         this.generateCode();
         this.generateCodeCounts();
-        console.log(this.code);
+        // console.log(this.code);
     }
 
     generateCode() {
@@ -54,11 +54,23 @@ class MasterMind extends React.Component {
 
     onClick = () => {
         this.incrementGuessCount()
+        if (this.validGuess(this.state.guess)) {
+            this.setState((prevState) => ({guesses: [...prevState.guesses, prevState.guess]}))
+        }
     }
 
     handlePegSelectorChange = (slotNum, pegValue) => {
         let pegSlot = "slot" + slotNum
         this.setState((prevState) => ({guess: {...prevState.guess, [pegSlot]: pegValue}}))
+    }
+
+    validGuess(guess){
+        for (let slot in this.state.guess){
+            if (guess[slot] == -1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     incrementGuessCount = () => {
@@ -96,6 +108,7 @@ class MasterMind extends React.Component {
                     </table>
                     <button onClick={this.onClick}>Guess</button>
                 </fieldset>
+                <OutputCodes codePegs={codePegs} guesses={this.state.guesses}/>
         </div>
         )
     }
