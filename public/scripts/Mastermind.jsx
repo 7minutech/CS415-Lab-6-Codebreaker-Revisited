@@ -22,6 +22,7 @@ const testCode1 = ["Red", "Orange", "Green", "Green"]
 const testCode2 = ["Blue", "Yellow", "Red", "Green"]
 const testCode3 = ["Green", "Yellow", "Yellow", "Yellow"]
 const testCode4 = ["Green", "Blue", "Blue", "Green"]
+const testCode5 = ["Yellow", "Red", "Blue", "Red"]
 
 const keyPegBlack = { name: "Black", color: "\u{26AB}" };
 const keyPegWhite = { name: "White", color: "\u{26AA}" };
@@ -30,11 +31,11 @@ class MasterMind extends React.Component {
     constructor(props) {
         super(props)
 
-        let initialCode = [];
-        for (let i = 0; i < codeLength; i++){
-            let random_index = (Math.floor(Math.random() * codePegNames.length));
-            initialCode.push(codePegNames[random_index]);
-        }
+        let initialCode = testCode5;
+        // for (let i = 0; i < codeLength; i++){
+        //     let random_index = (Math.floor(Math.random() * codePegNames.length));
+        //     initialCode.push(codePegNames[random_index]);
+        // }
         console.log(initialCode);
         let initialCodeCount = this.generateCodeCounts(initialCode)
 
@@ -91,15 +92,21 @@ class MasterMind extends React.Component {
         let tmp_code_counts = { ...this.state.code_counts };
         let blackPegCount = 0
         let whitePegCount = 0
+        let checkedPegs = []
         Object.keys(this.state.guess).forEach((key, index) => {
             let guess_color = this.state.guess[key];
             let codeColor = this.state.code[index]
             if (guess_color == codeColor){
                 blackPegCount++;
+                checkedPegs.push(index)
                 tmp_code_counts[guess_color] = tmp_code_counts[guess_color] - 1;
             }
         })
+
         Object.keys(this.state.guess).forEach((key, index) => {
+            if (checkedPegs.includes(index)){
+                return;
+            }
             let guess_color = this.state.guess[key];
             let codeColor = this.state.code[index]
            if (this.state.code.includes(guess_color) && tmp_code_counts[guess_color] > 0) {
