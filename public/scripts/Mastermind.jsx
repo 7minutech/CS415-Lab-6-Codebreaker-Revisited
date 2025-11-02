@@ -24,32 +24,44 @@ const keyPegWhite = { name: "White", color: "\u{26AA}" };
 class MasterMind extends React.Component {
     constructor(props) {
         super(props)
+
+        let initialCode = [];
+        for (let i = 0; i < codeLength; i++){
+            let random_index = (Math.floor(Math.random() * codePegNames.length));
+            initialCode.push(codePegNames[random_index]);
+        }
+        
+        let initialCodeCount = this.generateCodeCounts(initialCode)
+
         this.state = {
-            slots: [], guess_count: 0, white_pegs: 0, black_pegs: 0, code: [], code_counts: {},
+            slots: [], guess_count: 0, white_pegs: 0, black_pegs: 0, code: initialCode, code_counts: initialCodeCount,
             game_over: false, guess: {slot0: null, slot1: null, slot2: null, slot3: null}, guesses: []
         }
         // client code 
         // this.buildPegSelectors();
         // this.setSlots();
-        this.generateCode();
-        this.generateCodeCounts();
         // console.log(this.code);
     }
 
-    generateCode() {
+    generateCode = () => {
+        let newCode = []
         for (let i = 0; i < codeLength; i++){
-            let random_index = [(Math.floor(Math.random() * codePegNames.length))];
-            this.state.code.push(codePegNames[random_index]);
-        }
+            let random_index = (Math.floor(Math.random() * codePegNames.length));
+            newCode.push(codePegNames[random_index]);
+        }        
+        let newCodeCount = this.generateCodeCounts(newCode);
+        this.setState({code: newCode, code_counts: newCodeCount});
     }
 
-    generateCodeCounts() {
-        this.state.code.forEach((color) => {
-        if (!(color in this.state.code_counts)){
-            this.state.code_counts[color] = 0;
-        }
-            this.state.code_counts[color]++;
+    generateCodeCounts = (code) => {
+        let generatedCodeCounts = {};
+        code.forEach((color) => {
+            if (!(color in generatedCodeCounts)){
+                generatedCodeCounts[color] = 0;
+            }
+            generatedCodeCounts[color] = generatedCodeCounts[color] + 1;
         });
+        return generatedCodeCounts;
     }
 
     onClick = () => {
