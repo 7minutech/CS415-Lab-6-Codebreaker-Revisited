@@ -18,6 +18,11 @@ const codePegNames = [
     "Orange"
 ];
 
+const testCode1 = ["Red", "Orange", "Green", "Green"]
+const testCode2 = ["Blue", "Yellow", "Red", "Green"]
+const testCode3 = ["Green", "Yellow", "Yellow", "Yellow"]
+const testCode4 = ["Green", "Blue", "Blue", "Green"]
+
 const keyPegBlack = { name: "Black", color: "\u{26AB}" };
 const keyPegWhite = { name: "White", color: "\u{26AA}" };
 
@@ -30,12 +35,13 @@ class MasterMind extends React.Component {
             let random_index = (Math.floor(Math.random() * codePegNames.length));
             initialCode.push(codePegNames[random_index]);
         }
-        
+        console.log(initialCode);
         let initialCodeCount = this.generateCodeCounts(initialCode)
 
         this.state = {
             slots: [], guess_count: 0, white_pegs: 0, black_pegs: 0, code: initialCode, code_counts: initialCodeCount,
-            game_over: false, guess: {slot0: null, slot1: null, slot2: null, slot3: null}, guesses: []
+            game_over: false, guess: {slot0: null, slot1: null, slot2: null, slot3: null}, guesses: [],
+            keyPegCount: {}, keyPegCounts: []
         }
         // client code 
         // this.buildPegSelectors();
@@ -65,15 +71,43 @@ class MasterMind extends React.Component {
     }
 
     onClick = () => {
-        this.incrementGuessCount()
+        let newKeyPeg = this.count_white_black_pegs()
         if (this.validGuess(this.state.guess)) {
-            this.setState((prevState) => ({guesses: [...prevState.guesses, prevState.guess]}))
+            this.setState((prevState) => ({guess_count: prevState.guess_count + 1, guesses: [...prevState.guesses, prevState.guess], keyPegCount: newKeyPeg, 
+                keyPegCounts: [...prevState.keyPegCounts, newKeyPeg]}))
         }
     }
 
     handlePegSelectorChange = (slotNum, pegValue) => {
         let pegSlot = "slot" + slotNum
         this.setState((prevState) => ({guess: {...prevState.guess, [pegSlot]: pegValue}}))
+    }
+
+    count_white_black_pegs = () => {
+        let tmp_code_counts = { ...this.state.code_counts };
+        console.log(tmp_code_counts)
+        let blackPegCount = 0
+        let whitePegCount = 0
+        Object.keys(this.state.guess).forEach((key, index) => {
+            let guess_color = this.state.guess[key];
+            let codeColor = this.state.code[index]
+            console.log(guess_color, codeColor)
+            if (guess_color == codeColor){
+                blackPegCount++;
+                tmp_code_counts[guess_color] = tmp_code_counts[guess_color] - 1;
+            }
+        })
+        Object.keys(this.state.guess).forEach((key, index) => {
+            let guess_color = this.state.guess[key];
+            let codeColor = this.state.code[index]
+            console.log(guess_color, codeColor)
+           if (this.state.code.includes(guess_color) && tmp_code_counts[guess_color] > 0) {
+                console.log(tmp_code_counts[guess_color])
+                whitePegCount++;
+                tmp_code_counts[guess_color] =  tmp_code_counts[guess_color] - 1;
+            }
+        })
+        return {blackPeg: blackPegCount, whitePeg: whitePegCount}
     }
 
     validGuess(guess){
@@ -84,11 +118,6 @@ class MasterMind extends React.Component {
         }
         return true;
     }
-
-    incrementGuessCount = () => {
-        this.setState((previousState) => ({guess_count: previousState.guess_count + 1}))
-    }
-
 
     render() {
 
@@ -120,7 +149,7 @@ class MasterMind extends React.Component {
                     </table>
                     <button onClick={this.onClick}>Guess</button>
                 </fieldset>
-                <OutputCodes codePegs={codePegs} guesses={this.state.guesses}/>
+                <OutputCodes keyPegCounts={this.state.keyPegCounts} guesses={this.state.guesses} codePegs={codePegs}/>
         </div>
         )
     }
