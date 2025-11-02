@@ -71,10 +71,14 @@ class MasterMind extends React.Component {
     }
 
     onClick = () => {
+        if (this.state.game_over) {
+            return
+        }
         let newKeyPeg = this.count_white_black_pegs()
+        let gameOver = this.isGameOver(newKeyPeg);
         if (this.validGuess(this.state.guess)) {
             this.setState((prevState) => ({guess_count: prevState.guess_count + 1, guesses: [...prevState.guesses, prevState.guess], keyPegCount: newKeyPeg, 
-                keyPegCounts: [...prevState.keyPegCounts, newKeyPeg]}))
+                keyPegCounts: [...prevState.keyPegCounts, newKeyPeg], game_over: gameOver}))
         }
     }
 
@@ -85,13 +89,11 @@ class MasterMind extends React.Component {
 
     count_white_black_pegs = () => {
         let tmp_code_counts = { ...this.state.code_counts };
-        console.log(tmp_code_counts)
         let blackPegCount = 0
         let whitePegCount = 0
         Object.keys(this.state.guess).forEach((key, index) => {
             let guess_color = this.state.guess[key];
             let codeColor = this.state.code[index]
-            console.log(guess_color, codeColor)
             if (guess_color == codeColor){
                 blackPegCount++;
                 tmp_code_counts[guess_color] = tmp_code_counts[guess_color] - 1;
@@ -100,14 +102,16 @@ class MasterMind extends React.Component {
         Object.keys(this.state.guess).forEach((key, index) => {
             let guess_color = this.state.guess[key];
             let codeColor = this.state.code[index]
-            console.log(guess_color, codeColor)
            if (this.state.code.includes(guess_color) && tmp_code_counts[guess_color] > 0) {
-                console.log(tmp_code_counts[guess_color])
                 whitePegCount++;
                 tmp_code_counts[guess_color] =  tmp_code_counts[guess_color] - 1;
             }
         })
         return {blackPeg: blackPegCount, whitePeg: whitePegCount}
+    }
+
+    isGameOver = (keyPegCount) => {
+        return keyPegCount.blackPeg == 4;
     }
 
     validGuess(guess){
@@ -147,9 +151,10 @@ class MasterMind extends React.Component {
                         </tr>
 
                     </table>
-                    <button onClick={this.onClick}>Guess</button>
+                    <button onClick={this.onClick} disabled={this.state.game_over}>Guess</button>
                 </fieldset>
-                <OutputCodes keyPegCounts={this.state.keyPegCounts} guesses={this.state.guesses} codePegs={codePegs}/>
+                <OutputCodes keyPegCounts={this.state.keyPegCounts} guesses={this.state.guesses}
+                 codePegs={codePegs} guessCount={this.state.guess_count} gameOver={this.state.game_over}/>
         </div>
         )
     }
