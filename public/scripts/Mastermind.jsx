@@ -57,8 +57,8 @@
         }
 
         handlePegSelectorChange = (slotNum, pegValue) => {
-            let key = "slot" + slotNum
-            this.setState((prevState) => ({guesses: {...prevState.guesses, [key]: pegValue}}))
+            let pegSlot = "slot" + slotNum
+            this.setState((prevState) => ({guesses: {...prevState.guesses, [pegSlot]: pegValue}}))
         }
 
         incrementGuessCount = () => {
