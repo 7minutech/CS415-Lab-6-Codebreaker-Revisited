@@ -6,6 +6,7 @@ class PegSelector extends React.Component {
 
     pegSelected = (event) => {
         this.setState({selected: event.target.value})
+        this.props.onChange(this.props.slot, event.target.value)
     }
 
     render() {

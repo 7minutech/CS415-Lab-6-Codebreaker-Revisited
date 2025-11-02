@@ -56,8 +56,9 @@
             this.incrementGuessCount()
         }
 
-        handlePegSelectorChange = () => {
-
+        handlePegSelectorChange = (slotNum, pegValue) => {
+            let key = "slot" + slotNum
+            this.setState((prevState) => ({guesses: {...prevState.guesses, [key]: pegValue}}))
         }
 
         incrementGuessCount = () => {
@@ -69,7 +70,7 @@
 
             let pegSelectors = []
             for (let i = 0; i < codeLength; i++) {
-                pegSelectors.push(<PegSelector/>)
+                pegSelectors.push(<PegSelector onChange={this.handlePegSelectorChange} slot={i} />)
             }
 
             return(
