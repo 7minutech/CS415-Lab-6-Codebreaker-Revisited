@@ -31,23 +31,19 @@ class MasterMind extends React.Component {
     constructor(props) {
         super(props)
 
-        let initialCode = testCode5;
-        // for (let i = 0; i < codeLength; i++){
-        //     let random_index = (Math.floor(Math.random() * codePegNames.length));
-        //     initialCode.push(codePegNames[random_index]);
-        // }
+        let initialCode = [];
+        for (let i = 0; i < codeLength; i++){
+            let random_index = (Math.floor(Math.random() * codePegNames.length));
+            initialCode.push(codePegNames[random_index]);
+        }
         console.log(initialCode);
         let initialCodeCount = this.generateCodeCounts(initialCode)
 
         this.state = {
-            slots: [], guess_count: 0, white_pegs: 0, black_pegs: 0, code: initialCode, code_counts: initialCodeCount,
-            game_over: false, guess: {slot0: null, slot1: null, slot2: null, slot3: null}, guesses: [],
+            guess_count: 0, code: initialCode, code_counts: initialCodeCount, game_over: false,
+            guess: {slot0: null, slot1: null, slot2: null, slot3: null}, guesses: [],
             keyPegCount: {}, keyPegCounts: []
         }
-        // client code 
-        // this.buildPegSelectors();
-        // this.setSlots();
-        // console.log(this.code);
     }
 
     generateCode = () => {
