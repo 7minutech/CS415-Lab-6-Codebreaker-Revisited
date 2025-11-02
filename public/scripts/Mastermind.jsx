@@ -26,7 +26,7 @@ class MasterMind extends React.Component {
         super(props)
         this.state = {
             slots: [], guess_count: 0, white_pegs: 0, black_pegs: 0, code: [], code_counts: {},
-            game_over: false, guesses: {slot0: null, slot1: null, slot2: null, slot3: null}
+            game_over: false, guess: {slot0: null, slot1: null, slot2: null, slot3: null}, guesses: []
         }
         // client code 
         // this.buildPegSelectors();
@@ -58,7 +58,7 @@ class MasterMind extends React.Component {
 
     handlePegSelectorChange = (slotNum, pegValue) => {
         let pegSlot = "slot" + slotNum
-        this.setState((prevState) => ({guesses: {...prevState.guesses, [pegSlot]: pegValue}}))
+        this.setState((prevState) => ({guess: {...prevState.guess, [pegSlot]: pegValue}}))
     }
 
     incrementGuessCount = () => {
