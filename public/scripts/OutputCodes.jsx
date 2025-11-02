@@ -1,4 +1,4 @@
-class OutputDiagram extends React.Component {
+class OutputCodes extends React.Component {
 
     constructor(props) {
         super(props);
