@@ -24,15 +24,13 @@ class OutputCodes extends React.Component {
         const guessKeyPegs = this.props.keyPegCounts;
         const codePegs = this.props.codePegs    
         let winMessage = <p></p>
-        let playAgainMessage = <p></p>
         const rows = [];
 
             if (guesses.length > 0) {
 
                 if (this.props.gameOver) {
                     winMessage = <p>{`You won in ${this.props.guessCount} guess(es)!`}</p>
-                    playAgainMessage = <p>{"To play again refresh the page"}</p>
-                } 
+               } 
 
                 for (let i = (guesses.length - 1); i >= 0; --i) {
 
@@ -72,7 +70,6 @@ class OutputCodes extends React.Component {
                         <tr><th>1</th><th>2</th><th>3</th><th>4</th></tr>
                         {rows}
                     </table>
-                    {playAgainMessage}
                 </div>
             );
 
