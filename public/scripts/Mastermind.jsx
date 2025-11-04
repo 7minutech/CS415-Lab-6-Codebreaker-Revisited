@@ -119,7 +119,7 @@ class MasterMind extends React.Component {
 
     validGuess(guess){
         for (let slot in this.state.guess){
-            if (guess[slot] == -1) {
+            if (guess[slot] == -1 || guess[slot] === null) {
                 return false;
             }
         }
